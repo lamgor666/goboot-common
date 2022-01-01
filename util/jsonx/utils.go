@@ -82,7 +82,7 @@ func ToJson(arg0 interface{}, opts ...*option) string {
 				continue
 			}
 
-			contents = strings.Replace(contents, groups[0], groups[1] + " " + groups[2], 1)
+			contents = strings.Replace(contents, groups[0], groups[1]+" "+groups[2], 1)
 		}
 	}
 
@@ -107,5 +107,5 @@ func ToJson(arg0 interface{}, opts ...*option) string {
 		}
 	}
 
-	return contents
+	return strings.TrimSpace(contents)
 }

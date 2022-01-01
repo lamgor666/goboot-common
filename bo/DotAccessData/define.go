@@ -19,7 +19,7 @@ type Bo struct {
 
 func FromMap(arg0 interface{}) Bo {
 	if arg0 == nil {
-		return DotAccessData{}
+		return Bo{}
 	}
 	
 	map1 := castx.ToStringMap(arg0)
