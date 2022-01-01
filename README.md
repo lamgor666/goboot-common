@@ -1,2 +1,2 @@
 # goboot-common
-common libraries for goboot framework
+common libraries for lamgor666/goboot framework
