@@ -54,7 +54,7 @@ func ToJson(arg0 interface{}, opts ...*option) string {
 		return "{}"
 	}
 
-	contents := buf.String()
+	contents := strings.TrimSpace(buf.String())
 	var opt *option
 
 	if len(opts) > 0 {
@@ -107,5 +107,5 @@ func ToJson(arg0 interface{}, opts ...*option) string {
 		}
 	}
 
-	return strings.TrimSpace(contents)
+	return contents
 }
