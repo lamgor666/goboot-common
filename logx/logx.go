@@ -16,26 +16,46 @@ var logDir string
 var globalAlyslsSettings *alyslsSettings
 var loggers = map[string]Logger{}
 
-func WithLogDir(dir string) {
-	dir = fsx.GetRealpath(dir)
-	
-	if stat, err := os.Stat(dir); err == nil && stat.IsDir() {
-		logDir = dir
+func LogDir(dir ...string) string {
+	if len(dir) > 0 {
+		if dir[0] == "" {
+			return ""
+		}
+
+		s1 := fsx.GetRealpath(dir[0])
+
+		if stat, err := os.Stat(s1); err == nil && stat.IsDir() {
+			logDir = s1
+		}
+
+		return ""
 	}
+
+	return logDir
 }
 
-func WithAlyslsSettings(settings ...map[string]interface{}) {
-	st := map[string]interface{}{}
+func AlyslsSettings(settings ...interface{}) *alyslsSettings {
+	if len(settings) > 0 {
+		if settings[0] == nil {
+			return nil
+		}
 
-	if len(settings) > 0 && len(settings[0]) > 0 {
-		st = settings[0]
+		var _settings *alyslsSettings
+
+		if st, ok := settings[0].(*alyslsSettings); ok {
+			_settings = st
+		} else if map1, ok := settings[0].(map[string]interface{}); ok && len(map1) > 0 {
+			_settings = newAlyslsSettings(map1)
+		}
+
+		if _settings != nil {
+			globalAlyslsSettings = _settings
+		}
+
+		return nil
 	}
 
-	if len(st) < 1 {
-		st = AppConf.GetMap("alysls")
-	}
-
-	globalAlyslsSettings = newAlyslsSettings(st)
+	return globalAlyslsSettings
 }
 
 func InitLoggers(defines ...[]map[string]interface{}) {
@@ -97,7 +117,7 @@ func InitLoggers(defines ...[]map[string]interface{}) {
 			Level:     minLevel,
 		}
 
-		WithLogger(name, &loggerImpl{channel: name, logger: _logger})
+		WithLogger(name, &impl{channel: name, logger: _logger})
 	}
 }
 

@@ -26,12 +26,12 @@ type Logger interface {
 	Fatalf(format string, args ...interface{})
 }
 
-type loggerImpl struct {
+type impl struct {
 	channel string
 	logger  *logrus.Logger
 }
 
-func (l *loggerImpl) Log(level interface{}, args ...interface{}) {
+func (l *impl) Log(level interface{}, args ...interface{}) {
 	logLevel := logrus.TraceLevel
 
 	switch t := level.(type) {
@@ -88,7 +88,7 @@ func (l *loggerImpl) Log(level interface{}, args ...interface{}) {
 	}
 }
 
-func (l *loggerImpl) Logf(level interface{}, format string, args ...interface{}) {
+func (l *impl) Logf(level interface{}, format string, args ...interface{}) {
 	var msg string
 
 	if len(args) < 1 {
@@ -100,58 +100,58 @@ func (l *loggerImpl) Logf(level interface{}, format string, args ...interface{})
 	l.Log(level, msg)
 }
 
-func (l *loggerImpl) Trace(args ...interface{}) {
+func (l *impl) Trace(args ...interface{}) {
 	l.Log("trace", args...)
 }
 
-func (l *loggerImpl) Tracef(format string, args ...interface{}) {
+func (l *impl) Tracef(format string, args ...interface{}) {
 	l.Logf("trace", format, args...)
 }
 
-func (l *loggerImpl) Debug(args ...interface{}) {
+func (l *impl) Debug(args ...interface{}) {
 	l.Log("debug", args...)
 }
 
-func (l *loggerImpl) Debugf(format string, args ...interface{}) {
+func (l *impl) Debugf(format string, args ...interface{}) {
 	l.Logf("debug", format, args...)
 }
 
-func (l *loggerImpl) Info(args ...interface{}) {
+func (l *impl) Info(args ...interface{}) {
 	l.Log("info", args...)
 }
 
-func (l *loggerImpl) Infof(format string, args ...interface{}) {
+func (l *impl) Infof(format string, args ...interface{}) {
 	l.Logf("info", format, args...)
 }
 
-func (l *loggerImpl) Warn(args ...interface{}) {
+func (l *impl) Warn(args ...interface{}) {
 	l.Log("warn", args...)
 }
 
-func (l *loggerImpl) Warnf(format string, args ...interface{}) {
+func (l *impl) Warnf(format string, args ...interface{}) {
 	l.Logf("warn", format, args...)
 }
 
-func (l *loggerImpl) Error(args ...interface{}) {
+func (l *impl) Error(args ...interface{}) {
 	l.Log("error", args...)
 }
 
-func (l *loggerImpl) Errorf(format string, args ...interface{}) {
+func (l *impl) Errorf(format string, args ...interface{}) {
 	l.Logf("error", format, args...)
 }
 
-func (l *loggerImpl) Panic(args ...interface{}) {
+func (l *impl) Panic(args ...interface{}) {
 	l.Log("panic", args...)
 }
 
-func (l *loggerImpl) Panicf(format string, args ...interface{}) {
+func (l *impl) Panicf(format string, args ...interface{}) {
 	l.Logf("panic", format, args...)
 }
 
-func (l *loggerImpl) Fatal(args ...interface{}) {
+func (l *impl) Fatal(args ...interface{}) {
 	l.Log("fatal", args...)
 }
 
-func (l *loggerImpl) Fatalf(format string, args ...interface{}) {
+func (l *impl) Fatalf(format string, args ...interface{}) {
 	l.Logf("fatal", format, args...)
 }
